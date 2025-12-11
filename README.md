@@ -1,4 +1,4 @@
-![Badge Name](https://ru.pinterest.com/pin/9710955441543930/)
+![alt text](https://ru.pinterest.com/pin/9710955441543930/)
 #  Django Blog Project
 
 
