@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Створити статтю{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Створити нову статтю</h1>
+
+    <form method="post" class="article-form">
+        {% csrf_token %}
+
+        <!-- Поле заголовку -->
+        <div class="form-group">
+            <label for="id_title">Заголовок:</label>
+            {{ form.title }}
+            {% if form.title.errors %}
+                <div class="error">{{ form.title.errors }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Поле контенту -->
+        <div class="form-group">
+            <label for="id_content">Текст статті:</label>
+            {{ form.content }}
+            {% if form.content.errors %}
+                <div class="error">{{ form.content.errors }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Кнопки -->
+        <div class="form-actions">
+            <button type="submit" class="btn-submit">
+                ОПУБЛІКУВАТИ
+            </button>
+            <a href="{% url 'article_list' %}" class="btn-cancel">
+                СКАСУВАТИ
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,120 @@
+<div class="pagination-container">
+    <style>
+        /* Стилі для пагінації */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 2rem 0;
+            list-style: none;
+            padding: 0;
+        }
+
+        .page-item {
+            display: inline-block;
+        }
+
+        .page-link {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #007bff;
+            background-color: white;
+            transition: all 0.3s;
+        }
+
+        .page-link:hover {
+            background-color: #f8f9fa;
+            border-color: #007bff;
+        }
+
+        .page-item.active .page-link {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+
+        .page-item.disabled .page-link {
+            color: #6c757d;
+            pointer-events: none;
+            background-color: #e9ecef;
+            border-color: #dee2e6;
+        }
+
+        /* Інформація про сторінки */
+        .page-info {
+            text-align: center;
+            margin: 1rem 0;
+            color: #666;
+            font-style: italic;
+        }
+
+        /* Для мобільних */
+        @media (max-width: 768px) {
+            .pagination {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .page-link {
+                padding: 6px 10px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+
+    <!-- Інформація про сторінки -->
+    <div class="page-info">
+        Сторінка {{ page_obj.number }} з {{ page_obj.paginator.num_pages }}
+    </div>
+
+    <!-- Пагінація -->
+    <nav>
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1" title="Перша сторінка">««</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" title="Попередня сторінка">«</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link">««</span>
+                </li>
+                <li class="page-item disabled">
+                    <span class="page-link">«</span>
+                </li>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <li class="page-item active">
+                        <span class="page-link">{{ num }}</span>
+                    </li>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}" title="Наступна сторінка">»</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" title="Остання сторінка">»»</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link">»</span>
+                </li>
+                <li class="page-item disabled">
+                    <span class="page-link">»»</span>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
